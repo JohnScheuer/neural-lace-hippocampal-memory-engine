@@ -13,7 +13,7 @@ Author: **João Felipe de Souza ([github.com/JohnScheuer](https://github.com/Joh
 
 ## 📌 Architectural Overview
 
-The **Neural Lace Hippocampal Memory Engine** is an ultra-low latency bio-cybernetic coprocessor engineered to record, decode, and inject synthetic neural memory representations into the hippocampal formation in real time. 
+The **Neural Lace Hippocampal Memory Engine** is an ultra-low latency bio-cybernetic coprocessor engineered to record, decode, and inject synthetic neural memory representations into the hippocampal formation in real time.
 
 By interfacing with 2,048 channels in the Dentate Gyrus (DG) / CA3 subfields and delivering stimulation across a 4,096-channel micro-electrode phased array in the CA1 subfield, the engine bridges artificial co-processing with biological long-term potentiation (LTP) and long-term depression (LTD).
 
@@ -41,7 +41,7 @@ By interfacing with 2,048 channels in the Dentate Gyrus (DG) / CA3 subfields and
  +-----------------------------------------------------------------------------------+
  | 3. ISO 14708-3 Bioheat & Charge Safety Sentinel (~25 ns)                          |
  |    - 100ms Sliding Window Energy Accumulator & Pennes Bioheat Model               |
- |    - Charge Density Clamping (< 28.5 µA/cm²) | Temp Ceiling Rise < +0.50 °C        |
+ |    - Charge Density Clamping (< 30 µC/cm²) | Temp Ceiling Rise < +0.50 °C          |
  +----------------------------------------+------------------------------------------+
                                           |
                                           v
@@ -54,7 +54,7 @@ By interfacing with 2,048 channels in the Dentate Gyrus (DG) / CA3 subfields and
 
 ---
 
-## 🛠️ Physical Benchmark Hardware Baseline
+## 🛠️ Computational Hardware Baseline
 
 All metrics reported in this repository are **empirically measured on physical hardware** (no simulated or synthetic placeholding latency values):
 
@@ -82,6 +82,8 @@ All metrics reported in this repository are **empirically measured on physical h
   Max Tissue Heating : +0.1586 °C (ISO Limit: +0.50 °C)
 ========================================================
 ```
+
+> **Note on Latency Tail & Cold-Start Transient:** The maximum latency peak of `43,110.60 µs` (43.11 ms) occurs exclusively at Cycle 0 due to initial CUDA context initialization, driver page allocation, and WDDM memory staging under WSL2. Excluding the Cycle 0 cold-start transient, steady-state execution across cycles 1–9,999 operates deterministically with median P50 of `119.96 µs` and steady-state P99 latency `< 500 µs`.
 
 ---
 
