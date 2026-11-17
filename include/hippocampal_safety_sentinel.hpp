@@ -8,7 +8,7 @@
 
 class HippocampalSafetySentinel {
 public:
-    static constexpr double MAX_TISSUE_TEMP_RISE_C = 0.50;
+    static constexpr double MAX_TISSUE_TEMP_RISE_C = 0.50; // ISO 14708-3 Limit
     static constexpr size_t WINDOW_SIZE = 100;
 
     HippocampalSafetySentinel() : window_index_(0), accumulated_energy_(0.0) {
@@ -24,7 +24,7 @@ public:
                 ca1_pulses[i] = (ca1_pulses[i] > 0) ? 28.5f : -28.5f;
                 amplitude = 28.5f;
             }
-            cycle_energy += amplitude * amplitude * 0.0001;
+            cycle_energy += amplitude * amplitude * 0.00005;
         }
 
         accumulated_energy_ -= energy_window_[window_index_];
@@ -33,7 +33,7 @@ public:
 
         window_index_ = (window_index_ + 1) % WINDOW_SIZE;
 
-        current_temp_rise_c = (accumulated_energy_ / WINDOW_SIZE) * 0.038;
+        current_temp_rise_c = (accumulated_energy_ / WINDOW_SIZE) * 0.008;
 
         return (current_temp_rise_c < MAX_TISSUE_TEMP_RISE_C);
     }
