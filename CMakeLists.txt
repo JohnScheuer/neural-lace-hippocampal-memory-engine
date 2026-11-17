@@ -18,3 +18,6 @@ set_target_properties(ca1_stimulation_cuda PROPERTIES CUDA_SEPARABLE_COMPILATION
 
 add_executable(neural_lace_engine src/main.cpp)
 target_link_libraries(neural_lace_engine PRIVATE ca1_stimulation_cuda CUDA::cudart pthread)
+
+add_executable(neural_lace_test src/test_runner.cpp)
+target_link_libraries(neural_lace_test PRIVATE ca1_stimulation_cuda CUDA::cudart pthread)
